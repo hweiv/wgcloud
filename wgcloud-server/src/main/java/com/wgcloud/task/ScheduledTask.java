@@ -359,14 +359,19 @@ public class ScheduledTask {
                 List<DeskState> DESK_STATE_LIST = new ArrayList<DeskState>();
                 DESK_STATE_LIST.addAll(BatchData.DESK_STATE_LIST);
                 BatchData.DESK_STATE_LIST.clear();
-                List<String> hostnameList = new ArrayList<String>();
+//                List<String> hostnameList = new ArrayList<String>();
+                List<String> macAddrList = new ArrayList<String>();
                 for (DeskState deskState : DESK_STATE_LIST) {
-                    if (!hostnameList.contains(deskState.getHostname())) {
-                        hostnameList.add(deskState.getHostname());
+//                    if (!hostnameList.contains(deskState.getHostname())) {
+//                        hostnameList.add(deskState.getHostname());
+//                    }
+                    if (!macAddrList.contains(deskState.getMacAddr())) {
+                        macAddrList.add(deskState.getMacAddr());
                     }
                 }
-                for (String hostname : hostnameList) {
-                    paramsDel.put("hostname", hostname);
+                for (String macAddr : macAddrList) {
+//                    paramsDel.put("hostname", hostname);
+                    paramsDel.put("macAddr", macAddr);
                     deskStateService.deleteByAccHname(paramsDel);
                 }
                 deskStateService.saveRecord(DESK_STATE_LIST);
@@ -378,11 +383,15 @@ public class ScheduledTask {
                 BatchData.SYSTEM_INFO_LIST.clear();
                 List<SystemInfo> updateList = new ArrayList<SystemInfo>();
                 List<SystemInfo> insertList = new ArrayList<SystemInfo>();
+                // 查询已经保存过的机器信息列表
                 List<SystemInfo> savedList = systemInfoService.selectAllByParams(paramsDel);
+                logger.info("server:ScheduledTask-commitTask.SYSTEM_INFO_LIST:{}, savedList:{}", SYSTEM_INFO_LIST, savedList);
                 for (SystemInfo systemInfo : SYSTEM_INFO_LIST) {
                     boolean issaved = false;
                     for (SystemInfo systemInfoS : savedList) {
-                        if (systemInfoS.getHostname().equals(systemInfo.getHostname())) {
+                        logger.info("server:ScheduledTask-commitTask.systemInfo:{}, systemInfoS:{}", systemInfo, systemInfoS);
+//                        if (systemInfoS.getHostname().equals(systemInfo.getHostname())) {
+                        if (systemInfoS.getMacAddr().equals(systemInfo.getMacAddr())) {
                             systemInfo.setId(systemInfoS.getId());
                             updateList.add(systemInfo);
                             issaved = true;
@@ -393,6 +402,7 @@ public class ScheduledTask {
                         insertList.add(systemInfo);
                     }
                 }
+                logger.info("-server:ScheduledTask-commitTask.updateList:{}, insertList:{}-", updateList, insertList);
                 systemInfoService.updateRecord(updateList);
                 systemInfoService.saveRecord(insertList);
             }

@@ -1,5 +1,7 @@
 package com.wgcloud.entity;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,7 @@ import java.util.Date;
  * @Description: app端口信息
  * @Copyright: 2017-2022 wgcloud. All rights reserved.
  */
+@Data
 public class AppInfo extends BaseEntity {
 
     /**
@@ -22,6 +25,8 @@ public class AppInfo extends BaseEntity {
      * host名称
      */
     private String hostname;
+
+    private String macAddr;
 
     /**
      * 应用进程ID

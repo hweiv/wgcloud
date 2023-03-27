@@ -1,5 +1,6 @@
 package com.wgcloud.entity;
 
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @Description: 查看磁盘大小使用信息
  * @Copyright: 2017-2022 www.wgstart.com. All rights reserved.
  */
+@Data
 public class DeskState extends BaseEntity {
 
 
@@ -25,6 +27,8 @@ public class DeskState extends BaseEntity {
      * host名称
      */
     private String hostname;
+
+    private String macAddr;
 
     /**
      * 盘符类型

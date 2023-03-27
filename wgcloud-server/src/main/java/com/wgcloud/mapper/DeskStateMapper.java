@@ -17,8 +17,8 @@ import java.util.Map;
 @Repository
 public interface DeskStateMapper {
 
-
-    public List<DeskState> selectAllByParams(Map<String, Object> map) throws Exception;
+    // 根据macAddr查询磁盘信息
+    public List<DeskState> selectAllByMac(Map<String, Object> map) throws Exception;
 
     public List<DeskState> selectByParams(Map<String, Object> params) throws Exception;
 

@@ -4,6 +4,7 @@
 	<resultMap id="resultMap" type="com.wgcloud.entity.SystemInfo">
 		<id column="ID" property="id" jdbcType="CHAR" />
 		<result column="HOST_NAME" property="hostname" jdbcType="CHAR" />
+		<result column="MAC_ADDR" property="macAddr" jdbcType="VARCHAR" />
 		<result column="VERSION" property="version" jdbcType="CHAR" />
 		<result column="VERSION_DETAIL" property="versionDetail" jdbcType="CHAR" />
 		<result column="MEM_PER" property="memPer" jdbcType="DOUBLE" />
@@ -16,12 +17,15 @@
 	</resultMap>
 	
 	<sql id="tableColumnList">
-		ID,HOST_NAME, VERSION, VERSION_DETAIL, MEM_PER, CPU_PER,CPU_CORE_NUM,CPU_XH,CREATE_TIME,STATE,REMARK
+		ID,HOST_NAME,MAC_ADDR, VERSION, VERSION_DETAIL, MEM_PER, CPU_PER,CPU_CORE_NUM,CPU_XH,CREATE_TIME,STATE,REMARK
 	</sql>
 	
 	<sql id="queryByParams">
 		<if test="hostname != null">
 			<![CDATA[ AND HOST_NAME = #{hostname} ]]>
+		</if>
+		<if test="macAddr != null">
+			<![CDATA[ AND MAC_ADDR = #{macAddr} ]]>
 		</if>
 		<if test="memPer != null">
 			<![CDATA[ AND MEM_PER >= #{memPer} ]]>
@@ -64,9 +68,9 @@
 	</delete>
 
 	<insert id="insertList" parameterType="java.util.List" >
-		INSERT INTO SYSTEM_INFO (ID,HOST_NAME, VERSION, VERSION_DETAIL, MEM_PER, CPU_PER,CPU_CORE_NUM,CPU_XH,CREATE_TIME,STATE)  VALUES
+		INSERT INTO SYSTEM_INFO (ID,HOST_NAME,MAC_ADDR, VERSION, VERSION_DETAIL, MEM_PER, CPU_PER,CPU_CORE_NUM,CPU_XH,CREATE_TIME,STATE)  VALUES
 		<foreach collection="list" item="item" index="index" separator="," >
-			(#{item.id},#{item.hostname},#{item.version},#{item.versionDetail},#{item.memPer},#{item.cpuPer},#{item.cpuCoreNum},#{item.cpuXh},#{item.createTime},#{item.state})
+			(#{item.id},#{item.hostname},#{item.macAddr},#{item.version},#{item.versionDetail},#{item.memPer},#{item.cpuPer},#{item.cpuCoreNum},#{item.cpuXh},#{item.createTime},#{item.state})
 		</foreach>
 	</insert>
 
@@ -112,6 +116,7 @@
     	<trim prefix="(" suffix=")" suffixOverrides="," >
       		<if test="id != null" >ID,</if>
       		<if test="hostname != null" > HOST_NAME,</if>
+      		<if test="macAddr != null" > MAC_ADDR,</if>
       		<if test="version != null">VERSION,</if>
       		<if test="versionDetail != null" >VERSION_DETAIL,</if>
       		<if test="memPer != null" >MEM_PER,</if>
@@ -124,6 +129,7 @@
     	<trim prefix="values (" suffix=")" suffixOverrides="," >
       		<if test="id != null" >#{id},</if>
       		<if test="hostname != null" >#{hostname},</if>
+      		<if test="macAddr != null" >#{macAddr},</if>
       		<if test="version != null" >#{version},</if>
       		<if test="versionDetail != null" >#{versionDetail},</if>
       		<if test="memPer != null" >#{memPer},</if>

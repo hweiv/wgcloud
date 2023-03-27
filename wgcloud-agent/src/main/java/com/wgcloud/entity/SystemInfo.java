@@ -1,5 +1,7 @@
 package com.wgcloud.entity;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,7 @@ import java.util.Date;
  * @Description: 查看系统信息
  * @Copyright: 2017-2022 www.wgstart.com. All rights reserved.
  */
+@Data
 public class SystemInfo extends BaseEntity {
 
 
@@ -23,6 +26,11 @@ public class SystemInfo extends BaseEntity {
      * host名称
      */
     private String hostname;
+
+    /**
+     * mac地址
+     */
+    private String macAddr;
 
     /**
      * 系统版本信息

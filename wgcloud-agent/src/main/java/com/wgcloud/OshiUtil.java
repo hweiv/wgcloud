@@ -1,6 +1,8 @@
 package com.wgcloud;
 
+import cn.hutool.core.util.NetUtil;
 import com.wgcloud.entity.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import oshi.hardware.CentralProcessor;
@@ -13,6 +15,8 @@ import oshi.software.os.OSProcess;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,33 @@ public class OshiUtil {
 
     private static Runtime r = Runtime.getRuntime();
 
+    /**
+     * 获取本机ip
+     *
+     * @return
+     */
+    public static String getHostIp(){
+        InetAddress host = null;// 获得本机的InetAddress对象
+        try {
+            host = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            logger.error("获取本地ip地址出错");
+        }
+        // 获得本机的IP地址
+        return host.getHostAddress();
+    }
+
+    /**
+     * 获取本机mac
+     *
+     * @return
+     */
+    public static String getHostMac(){
+        String macAddress = NetUtil.getLocalMacAddress();
+        // 获得本机的mac地址
+        return macAddress;
+    }
+
 
     /**
      * 获取内存使用信息
@@ -45,7 +76,8 @@ public class OshiUtil {
         long free = memory.getAvailable() / 1024L / 1024L;
         double usePer = (double) (total - free) / (double) total;
         memState.setUsePer(FormatUtil.formatDouble(usePer * 100, 1));
-        memState.setHostname(commonConfig.getBindIp());
+        memState.setHostname(getHostIp());
+        memState.setMacAddr(getHostMac());
         return memState;
     }
 
@@ -64,7 +96,8 @@ public class OshiUtil {
 
         CpuState cpuState = new CpuState();
         cpuState.setSys(FormatUtil.formatDouble(processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100, 1));
-        cpuState.setHostname(commonConfig.getBindIp());
+        cpuState.setHostname(getHostIp());
+        cpuState.setMacAddr(getHostMac());
         return cpuState;
     }
 
@@ -76,7 +109,8 @@ public class OshiUtil {
      */
     public static com.wgcloud.entity.SystemInfo os(CentralProcessor processor, OperatingSystem os) throws Exception {
         com.wgcloud.entity.SystemInfo systemInfo = new com.wgcloud.entity.SystemInfo();
-        systemInfo.setHostname(commonConfig.getBindIp());
+        systemInfo.setHostname(getHostIp());
+        systemInfo.setMacAddr(getHostMac());
         systemInfo.setCpuCoreNum(processor.getLogicalProcessorCount() + "");
         String cpuInfo = processor.toString();
         if (cpuInfo.indexOf("\n") > 0) {
@@ -104,7 +138,8 @@ public class OshiUtil {
 
             DeskState deskState = new DeskState();
             deskState.setFileSystem(fs.getName());
-            deskState.setHostname(commonConfig.getBindIp());
+            deskState.setHostname(getHostIp());
+            deskState.setMacAddr(getHostMac());
             deskState.setUsed(((total - usable) / 1024 / 1024 / 1024) + "G");
             deskState.setAvail((usable / 1024 / 1024 / 1024) + "G");
             deskState.setSize((total / 1024 / 1024 / 1024) + "G");
@@ -138,7 +173,8 @@ public class OshiUtil {
         double[] loadAverage = processor.getSystemLoadAverage(3);
 
         sysLoadState.setOneLoad(loadAverage[0]);
-        sysLoadState.setHostname(commonConfig.getBindIp());
+        sysLoadState.setHostname(getHostIp());
+        sysLoadState.setMacAddr(getHostMac());
         sysLoadState.setFiveLoad(loadAverage[1]);
         sysLoadState.setFifteenLoad(loadAverage[2]);
         return sysLoadState;
@@ -217,7 +253,8 @@ public class OshiUtil {
         netIoState.setTxbyt(txBytesAvg + "");
         netIoState.setRxpck(rxPacketsAvg + "");
         netIoState.setTxpck(txPacketsAvg + "");
-        netIoState.setHostname(commonConfig.getBindIp());
+        netIoState.setHostname(getHostIp());
+        netIoState.setMacAddr(getHostMac());
         return netIoState;
     }
 }

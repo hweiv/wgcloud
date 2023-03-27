@@ -4,6 +4,7 @@
 	<resultMap id="resultMap" type="com.wgcloud.entity.DeskState">
 		<id column="ID" property="id" jdbcType="CHAR" />
 		<result column="HOST_NAME" property="hostname" jdbcType="CHAR" />
+		<result column="MAC_ADDR" property="macAddr" jdbcType="VARCHAR" />
 		<result column="FILE_STSTEM" property="fileSystem" jdbcType="CHAR" />
 		<result column="SIZE" property="size" jdbcType="CHAR" />
 		<result column="USED" property="used" jdbcType="CHAR" />
@@ -14,7 +15,7 @@
 	</resultMap>
 	
 	<sql id="tableColumnList">
-		ID,HOST_NAME, FILE_STSTEM, SIZE, USED, AVAIL,USE_PER,DATE_STR,CREATE_TIME
+		ID,HOST_NAME,MAC_ADDR, FILE_STSTEM, SIZE, USED, AVAIL,USE_PER,DATE_STR,CREATE_TIME
 	</sql>
 	
 	<sql id="queryByParams">
@@ -23,10 +24,16 @@
 		</if>
 	</sql>
 
+	<sql id="queryByMac">
+		<if test="macAddr != null">
+			<![CDATA[ AND MAC_ADDR = #{macAddr} ]]>
+		</if>
+	</sql>
+
 	<insert id="insertList" parameterType="java.util.List" >
-		INSERT INTO DESK_STATE (ID,HOST_NAME, FILE_STSTEM, SIZE, USED, AVAIL,USE_PER,DATE_STR,CREATE_TIME)  VALUES
+		INSERT INTO DESK_STATE (ID,HOST_NAME,MAC_ADDR, FILE_STSTEM, SIZE, USED, AVAIL,USE_PER,DATE_STR,CREATE_TIME)  VALUES
 		<foreach collection="list" item="item" index="index" separator="," >
-			(#{item.id},#{item.hostname},#{item.fileSystem},#{item.size},#{item.used},#{item.avail},#{item.usePer},#{item.dateStr},#{item.createTime})
+			(#{item.id},#{item.hostname},#{item.macAddr},#{item.fileSystem},#{item.size},#{item.used},#{item.avail},#{item.usePer},#{item.dateStr},#{item.createTime})
 		</foreach>
 	</insert>
 
@@ -44,7 +51,7 @@
 	
 	<delete id="deleteByAccHname"  parameterType="map">
 			DELETE FROM DESK_STATE WHERE
-			<![CDATA[  HOST_NAME  = #{hostname} ]]>
+			<![CDATA[  MAC_ADDR  = #{macAddr} ]]>
 	</delete>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -66,6 +73,7 @@
     	<trim prefix="(" suffix=")" suffixOverrides="," >
       		<if test="id != null" >ID,</if>
       		<if test="hostname != null" > HOST_NAME,</if>
+      		<if test="macAddr != null" > MAC_ADDR,</if>
       		<if test="fileSystem != null">FILE_STSTEM,</if>
       		<if test="size != null" >SIZE,</if>
       		<if test="used != null" >USED,</if>
@@ -77,6 +85,7 @@
     	<trim prefix="values (" suffix=")" suffixOverrides="," >
       		<if test="id != null" >#{id},</if>
       		<if test="hostname != null" >#{hostname},</if>
+      		<if test="macAddr != null" >#{macAddr},</if>
       		<if test="fileSystem != null" >#{fileSystem},</if>
       		<if test="size != null" >#{size},</if>
       		<if test="used != null" >#{used},</if>
@@ -88,12 +97,12 @@
 	</insert>
 	
 	
-	  <select id="selectAllByParams" parameterType="map" resultMap="resultMap">
+	  <select id="selectAllByMac" parameterType="map" resultMap="resultMap">
 		SELECT
 		<include refid="tableColumnList" />
 		FROM DESK_STATE t
 		<where>
-			<include refid="queryByParams" />
+			<include refid="queryByMac" />
 		</where>
 		 ORDER BY CREATE_TIME DESC,USE_PER DESC
 	</select>

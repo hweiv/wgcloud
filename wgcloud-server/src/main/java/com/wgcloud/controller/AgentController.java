@@ -52,6 +52,7 @@ public class AgentController {
     @ResponseBody
     @RequestMapping("/minTask")
     public JSONObject minTask(@RequestBody String paramBean) {
+        logger.info("-AgentController-minTask.paramBean:{}", paramBean);
         JSONObject agentJsonObject = (JSONObject) JSONUtil.parse(paramBean);
         JSONObject resultJson = new JSONObject();
         if (!tokenUtils.checkAgentToken(agentJsonObject)) {

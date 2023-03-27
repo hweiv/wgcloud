@@ -44,6 +44,7 @@
           <tr>
             <th style="width: 80px">序号</th>
             <th>IP</th>
+            <th>MAC地址</th>
             <th>内存%</th>
             <th>CPU%</th>
             <th title="所有磁盘已使用%">磁盘%</th>
@@ -55,7 +56,9 @@
           <tbody>
           <th:block th:each="item,iterStat : ${page.list}">
             <tr>
+                <!--序号-->
               <td th:text="${iterStat.index+1}">1</td>
+                <!--IP-->
               <td>
                   <th:block th:if="${item.state  == '2'}">
                       <span title="超过10分钟未上报状态，可能已下线" style="color:red;font-weight: 500;"  th:text="${item.hostname}"></span>
@@ -64,6 +67,16 @@
                       <span   th:text="${item.hostname}"></span>
                   </th:block>
               </td>
+                <!--MAC地址-->
+                <td>
+                    <th:block th:if="${item.state  == '2'}">
+                        <span title="超过10分钟未上报状态，可能已下线" style="color:red;font-weight: 500;"  th:text="${item.macAddr}"></span>
+                    </th:block>
+                    <th:block th:if="${item.state  != '2'}">
+                        <span   th:text="${item.macAddr}"></span>
+                    </th:block>
+                </td>
+                <!--内存%-->
               <td>
                   <th:block th:if="${item.memPer >= 90}">
                       <span class="badge bg-danger" th:text="${item.memPer}"></span>
@@ -75,6 +88,7 @@
                       <span class="badge bg-primary" th:text="${item.memPer}"></span>
                   </th:block>
               </td>
+                <!--CPU%-->
               <td>
                   <th:block th:if="${item.cpuPer >= 90}">
                       <span class="badge bg-danger" th:text="${item.cpuPer}"></span>
@@ -86,6 +100,7 @@
                       <span class="badge bg-primary" th:text="${item.cpuPer}"></span>
                   </th:block>
               </td>
+                <!--磁盘%-->
                 <td>
                     <th:block th:if="${item.diskPer >= 90}">
                         <span class="badge bg-danger" th:text="${item.diskPer}"></span>
@@ -97,8 +112,11 @@
                         <span class="badge bg-primary" th:text="${item.diskPer}"></span>
                     </th:block>
                 </td>
+                <!--更新时间-->
               <td th:text="${#dates.format(item.createTime,'yyyy-MM-dd HH:mm:ss')}">Update software</td>
+                <!--备注-->
                 <td th:text="${item.remark}"></td>
+                <!--操作-->
               <td>
                   <button type="button" class="btn btn-default btn-sm" data-toggle="modal" th:onclick="setHostRemark([[${item.id}]],[[${item.remark}]])" data-target="#modal-default">
                      备注

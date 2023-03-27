@@ -58,8 +58,8 @@ public class DeskStateService {
         return deskStateMapper.selectById(id);
     }
 
-    public List<DeskState> selectAllByParams(Map<String, Object> params) throws Exception {
-        return deskStateMapper.selectAllByParams(params);
+    public List<DeskState> selectAllByMac(Map<String, Object> params) throws Exception {
+        return deskStateMapper.selectAllByMac(params);
     }
 
     public int deleteByAccHname(Map<String, Object> params) throws Exception {

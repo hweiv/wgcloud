@@ -1,5 +1,6 @@
 package com.wgcloud.entity;
 
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @Description: uptime查看系统负载状态
  * @Copyright: 2017-2022 www.wgstart.com. All rights reserved.
  */
+@Data
 public class SysLoadState extends BaseEntity {
 
     /**
@@ -23,6 +25,8 @@ public class SysLoadState extends BaseEntity {
      * host名称
      */
     private String hostname;
+
+    private String macAddr;
 
     /**
      * 1分钟之前到现在的负载

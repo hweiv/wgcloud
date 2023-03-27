@@ -13,7 +13,7 @@ public class CommonConfig {
 
     private String serverUrl = "";
 
-    private String bindIp = "";
+//    private String bindIp = "";
 
     private String wgToken = "";
 
@@ -25,13 +25,13 @@ public class CommonConfig {
         this.serverUrl = serverUrl;
     }
 
-    public String getBindIp() {
-        return bindIp;
-    }
-
-    public void setBindIp(String bindIp) {
-        this.bindIp = bindIp;
-    }
+//    public String getBindIp() {
+//        return bindIp;
+//    }
+//
+//    public void setBindIp(String bindIp) {
+//        this.bindIp = bindIp;
+//    }
 
     public String getWgToken() {
         return wgToken;

@@ -58,7 +58,7 @@ public class ScheduledTask {
         JSONObject jsonObject = new JSONObject();
         LogInfo logInfo = new LogInfo();
         Timestamp t = FormatUtil.getNowTime();
-        logInfo.setHostname(commonConfig.getBindIp() + "：Agent错误");
+        logInfo.setHostname(OshiUtil.getHostIp() + "：Agent错误");
         logInfo.setCreateTime(t);
         try {
             oshi.SystemInfo si = new oshi.SystemInfo();
@@ -119,7 +119,8 @@ public class ScheduledTask {
                 List<AppInfo> appInfoResList = new ArrayList<>();
                 List<AppState> appStateResList = new ArrayList<>();
                 for (AppInfo appInfo : APP_INFO_LIST_CP) {
-                    appInfo.setHostname(commonConfig.getBindIp());
+                    appInfo.setHostname(OshiUtil.getHostIp());
+                    appInfo.setMacAddr(OshiUtil.getHostMac());
                     appInfo.setCreateTime(t);
                     appInfo.setState("1");
                     String pid = FormatUtil.getPidByFile(appInfo);
@@ -163,11 +164,12 @@ public class ScheduledTask {
         JSONObject jsonObject = new JSONObject();
         LogInfo logInfo = new LogInfo();
         Timestamp t = FormatUtil.getNowTime();
-        logInfo.setHostname(commonConfig.getBindIp() + "：Agent获取进程列表错误");
+        logInfo.setHostname(OshiUtil.getHostIp() + "：Agent获取进程列表错误");
         logInfo.setCreateTime(t);
         try {
             JSONObject paramsJson = new JSONObject();
-            paramsJson.put("hostname", commonConfig.getBindIp());
+            paramsJson.put("hostname", OshiUtil.getHostIp());
+            paramsJson.put("macAddr", OshiUtil.getHostMac());
             String resultJson = restUtil.post(commonConfig.getServerUrl() + "/wgcloud/appInfo/agentList", paramsJson);
             if (resultJson != null) {
                 JSONArray resultArray = JSONUtil.parseArray(resultJson);

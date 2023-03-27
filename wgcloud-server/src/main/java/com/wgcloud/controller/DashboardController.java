@@ -215,8 +215,10 @@ public class DashboardController {
 
             //设置磁盘总使用率 begin
             for (SystemInfo systemInfo1 : pageInfo.getList()) {
-                params.put("hostname", systemInfo1.getHostname());
-                List<DeskState> deskStates = deskStateService.selectAllByParams(params);
+//                params.put("hostname", systemInfo1.getHostname());
+                params.put("macAddr", systemInfo1.getMacAddr());
+                // 根据mac地址查找磁盘列表
+                List<DeskState> deskStates = deskStateService.selectAllByMac(params);
                 try {
                     Double sumSize = 0d;
                     Double useSize = 0d;
@@ -271,8 +273,9 @@ public class DashboardController {
             hostname = systemInfo.getHostname();
             model.addAttribute("systemInfo", systemInfo);
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("hostname", systemInfo.getHostname());
-            List<DeskState> deskStateList = deskStateService.selectAllByParams(params);
+//            params.put("hostname", systemInfo.getHostname());
+            params.put("macAddr", systemInfo.getMacAddr());
+            List<DeskState> deskStateList = deskStateService.selectAllByMac(params);
             model.addAttribute("deskStateList", deskStateList);
         } catch (Exception e) {
             logger.error("服务器详细信息错误：", e);
