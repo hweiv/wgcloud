@@ -29,17 +29,17 @@ import java.util.Map;
 
 /**
  * @version v2.3
- * @ClassName:DashboardCotroller.java
+ * @ClassName:DashboardController.java
  * @author: http://www.wgstart.com
  * @date: 2019年11月16日
- * @Description: DashboardCotroller.java
+ * @Description: DashboardController.java
  * @Copyright: 2017-2022 wgcloud. All rights reserved.
  */
 @Controller
 @RequestMapping(value = "/dash")
-public class DashboardCotroller {
+public class DashboardController {
 
-    private static final Logger logger = LoggerFactory.getLogger(DashboardCotroller.class);
+    private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
     @Resource
     DashboardService dashboardService;
     @Resource
@@ -203,7 +203,7 @@ public class DashboardCotroller {
      * @param request
      * @return
      */
-    @RequestMapping(value = "systemInfoList")
+    @RequestMapping(value = "/systemInfoList")
     public String systemInfoList(SystemInfo systemInfo, Model model, HttpServletRequest request) {
         Map<String, Object> params = new HashMap<String, Object>();
         try {
@@ -289,7 +289,6 @@ public class DashboardCotroller {
     /**
      * 删除主机
      *
-     * @param id
      * @param model
      * @param request
      * @param redirectAttributes

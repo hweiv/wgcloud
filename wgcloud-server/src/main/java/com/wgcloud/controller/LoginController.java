@@ -17,17 +17,17 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @version v2.3
- * @ClassName:LoginCotroller.java
+ * @ClassName:LoginController.java
  * @author: http://www.wgstart.com
  * @date: 2019年11月16日
- * @Description: LoginCotroller.java
+ * @Description: LoginController.java
  * @Copyright: 2017-2022 wgcloud. All rights reserved.
  */
 @Controller
 @RequestMapping(value = "/login")
-public class LoginCotroller {
+public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginCotroller.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Resource
     private CommonConfig commonConfig;

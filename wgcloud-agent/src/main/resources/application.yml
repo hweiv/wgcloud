@@ -1,5 +1,5 @@
 server:
-  port: 9998
+  port: 5001
   servlet:
     context-path: /wgcloud-agent
 spring:
@@ -13,8 +13,8 @@ logging:
 #自定义配置参数
 base:
   #wgcloud-server端访问地址
-  serverUrl: http://localhost:9999
+  serverUrl: http://localhost:5000
   #本机ip，不要用localhost或127.0.0.1
-  bindIp: 192.168.1.2
+  bindIp: 172.26.24.52
   #通信token，请和server端配置的wgToken保持一致
   wgToken: wgcloud

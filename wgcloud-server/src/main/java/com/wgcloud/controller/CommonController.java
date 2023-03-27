@@ -8,15 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @version v2.3
- * @ClassName:CommonCotroller.java
+ * @ClassName:CommonController.java
  * @author: http://www.wgstart.com
  * @date: 2019年11月16日
- * @Description: CommonCotroller.java
+ * @Description: CommonController.java
  * @Copyright: 2017-2022 wgcloud. All rights reserved.
  */
 @Controller
 @RequestMapping(value = "/common/error")
-public class CommonCotroller {
+public class CommonController {
 
 
     /**
