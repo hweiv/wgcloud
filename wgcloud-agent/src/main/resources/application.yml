@@ -18,3 +18,8 @@ base:
   bindIp: 172.26.24.52
   #通信token，请和server端配置的wgToken保持一致
   wgToken: wgcloud
+
+#服务器的ip地址
+target.service:
+      host: 172.26.24.52
+      port: 9888

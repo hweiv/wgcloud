@@ -4,6 +4,23 @@ server:
     session:
       timeout: 120m
     context-path: /wgcloud
+
+
+#socket配置
+#socketio:
+#  host: 172.26.24.52
+#  port: 8503
+#  maxFramePayloadLength: 1048576
+#  maxHttpContentLength: 1048576
+#  bossCount: 1
+#  workCount: 100
+#  allowCustomRequests: true
+#  upgradeTimeout: 10000
+#  pingTimeout: 60000
+#  pingInterval: 25000
+
+socket.server.port: 9888
+
 #日志文件输出路径
 logging:
   file:
