@@ -2,6 +2,8 @@ package com.wgcloud;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
  * @Copyright: 2017-2022 www.wgstart.com. All rights reserved.
  */
 @Component
+@Slf4j
 public class RestUtil {
 
     @Autowired
@@ -27,6 +30,7 @@ public class RestUtil {
     private CommonConfig commonConfig;
 
     public String post(String url, JSONObject jsonObject) {
+        log.info("RestUtil-post.url:{}, jsonObject:{}", url, jsonObject.toString());
         if (null != jsonObject) {
             jsonObject.put("wgToken", MD5Utils.GetMD5Code(commonConfig.getWgToken()));
         }
@@ -35,8 +39,11 @@ public class RestUtil {
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8.toString());
         HttpEntity<String> httpEntity = new HttpEntity<>(JSONUtil.parse(jsonObject).toString(), headers);
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, httpEntity, String.class);
+        log.info("RestUtil-post.responseEntity:{}", JSON.toJSONString(responseEntity));
         return responseEntity.getBody();
     }
+
+
 
     public JSONObject post(String url) {
         HttpHeaders headers = new HttpHeaders();

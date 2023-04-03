@@ -1,5 +1,8 @@
 package com.wgcloud.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 /**
@@ -10,6 +13,8 @@ import java.util.Date;
  * @Description: 日志信息
  * @Copyright: 2017-2022 wgcloud. All rights reserved.
  */
+@NoArgsConstructor
+@AllArgsConstructor
 public class LogInfo extends BaseEntity {
 
     /**

@@ -1,16 +1,22 @@
 package com.wgcloud.controller;
 
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.wgcloud.common.Result;
 import com.wgcloud.entity.LogInfo;
 import com.wgcloud.service.LogInfoService;
 import com.wgcloud.util.CodeUtil;
 import com.wgcloud.util.PageUtil;
+import com.wgcloud.util.TokenUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -35,11 +41,14 @@ public class LogInfoController {
     @Resource
     private LogInfoService logInfoService;
 
+    @Autowired
+    private TokenUtils tokenUtils;
+
     /**
      * 根据条件查询日志信息列表
      *
      * @param model
-     * @param request
+     * @param
      * @return
      */
     @RequestMapping(value = "list")
@@ -65,10 +74,24 @@ public class LogInfoController {
         return "log/list";
     }
 
+    @ResponseBody
+    @RequestMapping("save")
+    public Result save(@RequestBody String paramBean) {
+        logger.info("LogInfoController-save:{}", JSON.toJSONString(paramBean));
+        JSONObject jsonObject = (JSONObject) JSONUtil.parse(paramBean);
+        if (!tokenUtils.checkAgentToken(jsonObject)) {
+            logger.error("token is invalidate");
+            return Result.fail("error：token is invalidate");
+        }
+        logger.info("LogInfoController-save.paramBean:{}", jsonObject);
+        LogInfo loginfo = jsonObject.get("loginfo", LogInfo.class);
+        LogInfo resLogInfo = logInfoService.save(loginfo);
+        return Result.success(resLogInfo);
+    }
+
     /**
      * 查看日志信息
      *
-     * @param LogInfo
      * @param model
      * @param request
      * @return

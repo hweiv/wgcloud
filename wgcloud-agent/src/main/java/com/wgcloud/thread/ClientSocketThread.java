@@ -36,27 +36,12 @@ public class ClientSocketThread implements Runnable{
             Socket socket = new Socket(host, port);
             OutputStream out = socket.getOutputStream();
             DataOutputStream dos = new DataOutputStream(out);
-//        File[] roots = File.listRoots();
-//        File uDisk = new File("F:\\");
             File file1;
             while (true) {
 //
 
                 for (String str : arr) {
                     file1 = new File(str + ":\\");
-//                    try {
-//                        long start = System.currentTimeMillis();
-//                        Stream<Path> walk = Files.walk(Paths.get(file.getAbsolutePath()));
-//                        List<String> fileNames = new ArrayList<>();
-//                        walk.filter(Files::isRegularFile).forEach(path -> fileNames.add(String.valueOf(path.getFileName())));
-////                        List<Path> paths = walk.filter(Files::isRegularFile).collect(Collectors.toList());
-////                        List<Path> paths = walk.collect(Collectors.toList());
-//                        long end = System.currentTimeMillis();
-//                        dos.writeUTF("插入的U盘/移动硬盘的所有可访问文件有：" + JSONUtil.toJsonStr(fileNames));
-//                        dos.writeUTF("读取文件信息所花费时间为：" + (end - start) + "ms");
-//                    } catch (IOException e) {
-//                        log.error("the Cilent.class-check: error:{}", e);
-//                    }
 
                     // 如果磁盘现在存在，并且以前不存在
                     // 则表示刚插上U盘，返回

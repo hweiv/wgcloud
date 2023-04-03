@@ -1,5 +1,6 @@
 package com.wgcloud.service;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wgcloud.entity.LogInfo;
@@ -58,6 +59,17 @@ public class LogInfoService {
         } catch (Exception e) {
             logger.error("保存日志信息异常：", e);
         }
+    }
+
+    public LogInfo save(LogInfo logInfo) {
+        logger.info("LogInfoService-save:{}", JSON.toJSONString(logInfo));
+        logInfo.setId(UUIDUtil.getUUID());
+        try {
+            logInfoMapper.save(logInfo);
+        } catch (Exception e) {
+            logger.error("保存日志信息异常：", e);
+        }
+        return logInfo;
     }
 
     public int countByParams(Map<String, Object> params) throws Exception {
